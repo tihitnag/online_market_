@@ -1,0 +1,60 @@
+{% extends "core/base.html" %}
+
+{% block title %}browser{% endblock %}
+
+{% block content %}
+<div class="pb-6 mb-3 grid grid-cols-4 gap-4 bg-green-100">
+    <div class="col-span-1">
+        <div class="p-6 bg-white rounded-xl mb-6">
+            <form method="get" action="{% url 'item:items' %}">
+                <input name="qurey" class="w-full py-4 px-6 border rounded-xl" type="text" value="{{ qurey }}" placeholder="Find car, toy, chair...">
+                <button class="mt-2 py-2 px-4 text-lg bg-teal-100 text-white rounded-xl flex items-center bg-green-400">
+                    <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-5.2-5.2"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10C15 5.58 11.42 2 7 2C2.58 2 0 5.58 0 10s2.58 8 7 8c1.55 0 3.04-.42 4.32-1.2"></path>
+                    </svg>
+                    Search
+                </button>
+            </form>
+            <hr class="mt-6">
+            <p class="font-semibold">Categories</p>
+            <ul>
+                {% for category in categories %}
+                    <li class="py-2 px-4 rounded-xl {% if category.id == category_id %}bg-gray-200{% endif %}">
+                        <a href="{% url 'item:items' %}?qurey={{ qurey }}&category={{ category.id }}">{{ category.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <hr class="mt-6">
+            <p class="font-semibold">Clear Filter</p>
+            <ul>
+                <li>
+                    <a href="{% url 'item:items' %}" class="mt-2 py-2 px-4 text-lg bg-teal-100 text-white rounded-xl flex items-center bg-green-400"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-span-3">
+        <div class="grid grid-cols-3 gap-3">
+            {% for item in items %}
+                <div>
+                    <a href="{% url 'item:detail' item.id %}">
+                        <div>
+                            {% if item.image %}
+                                <img src="{{ item.image.url }}" class="rounded-t-xl w-64 h-48">
+                            {% else %}
+                                <p>No Image</p>
+                            {% endif %}
+                        </div>
+                        <div class="p-6 bg-white rounded-b-xl">
+                            <h2 class="text-2xl font-bold">{{ item.name }}</h2>
+                            <p class="text-black font-bold">Price: {{ item.price }}</p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
