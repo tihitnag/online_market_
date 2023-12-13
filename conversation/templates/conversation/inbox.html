@@ -3,8 +3,7 @@
 {% block title %}inbox{% endblock %}
 
 {% block content %}
-
-<div class="space-y-6">
+<div class="space-y-9">
     {% for conversation in conversations %}
         <a href="#">
             <div class="p-6 flex bg-gray-100 rounded-xl">
@@ -14,14 +13,14 @@
                 <div>
                     {% for member in conversation.members.all %}
                         {% if member != request.user %}
-                            <p class="mb-4"><strong>{{ member.username }}</strong> | {{ conversation.modified_at }}</p>
-                            <p>{{ conversation.item.name }}</p>
+                            <p class="mb-4"><strong>{{ member.username }}</strong></p>
                         {% endif %}
                     {% endfor %}
+                    <p>{{ conversation.item.name }}</p>
+                    <p>{{ conversation.modified_at }}</p>
                 </div>
             </div>
         </a>
     {% endfor %}
 </div>
-
 {% endblock %}

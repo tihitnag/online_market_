@@ -76,4 +76,4 @@ def delete(request, pk):
     
     item.delete()
         
-    return redirect('dashboard:index')
+    return redirect('/')
